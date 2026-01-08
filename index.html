@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>800 AVA Project — Investment Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0d0d12;
+            --bg-card: #15151d;
+            --bg-card-alt: #1a1a24;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2a2a3a;
+            --gradient-1: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Cost Tables */
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cost-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cost-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-4px);
+        }
+
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent, var(--gradient-1));
+        }
+
+        .cost-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .platform-icon {
+            font-size: 1.75rem;
+        }
+
+        .platform-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .cost-range {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .cost-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-row:last-child {
+            border-bottom: none;
+        }
+
+        .cost-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .cost-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .cost-value.highlight {
+            color: var(--accent-green);
+        }
+
+        .cost-value.warning {
+            color: var(--accent-orange);
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .summary-card.primary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .summary-card.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .summary-card.warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .summary-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple), var(--accent-green));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            margin-left: 1rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--bg-dark);
+            border: 3px solid var(--accent-blue);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(2)::before { border-color: var(--accent-purple); }
+        .timeline-item:nth-child(3)::before { border-color: var(--accent-cyan); }
+        .timeline-item:nth-child(4)::before { border-color: var(--accent-green); }
+
+        .timeline-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .team-role {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .team-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .team-cost {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--accent-green);
+        }
+
+        /* Analysis Section */
+        .analysis-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .analysis-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-icon {
+            font-size: 1.25rem;
+        }
+
+        .analysis-list {
+            list-style: none;
+        }
+
+        .analysis-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .analysis-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--accent-green);
+        }
+
+        .warn-icon {
+            color: var(--accent-orange);
+        }
+
+        .error-icon {
+            color: var(--accent-red);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .data-table th {
+            background: var(--bg-card-alt);
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .total-row td {
+            background: rgba(16, 185, 129, 0.1);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(59, 130, 246, 0.4);
+        }
+
+        @media print {
+            .print-btn { display: none; }
+            .noise-overlay { display: none; }
+            body { background: white; color: #1a1a1a; }
+            .cost-card, .summary-card, .timeline-item, .team-card, .analysis-card {
+                background: #f8f9fa;
+                border-color: #e5e7eb;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-stat-value { font-size: 1.75rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="badge">Investment Analysis</div>
+            <h1>800 AVA Project</h1>
+            <p class="subtitle">Complete budget breakdown and feasibility analysis for managing 800 social media profiles across Facebook, Instagram, TikTok, and Twitter/X</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">800</div>
+                    <div class="hero-stat-label">Total Profiles</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">4</div>
+                    <div class="hero-stat-label">Platforms</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">200</div>
+                    <div class="hero-stat-label">Per Platform</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">~3 mo</div>
+                    <div class="hero-stat-label">To Launch</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- One-Time Account Costs -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(59, 130, 246, 0.15);">💳</div>
+                <div>
+                    <div class="section-title">Account Acquisition Costs</div>
+                    <div class="section-subtitle">One-time purchase — 200 accounts per platform</div>
+                </div>
+            </div>
+
+            <div class="cost-grid">
+                <div class="cost-card" style="--card-accent: linear-gradient(90deg, #1877F2, #3b5998);">
+                    <div class="cost-card-header">
+                        <div>
+                            <span class="platform-icon">📘</span>
+                            <span class="platform-name">Facebook</span>
+                        </div>
+                        <span class="cost-range">$8 - $10/acc</span>
+                    </div>
+                    <div class="cost-breakdown">
+                        <div class="cost-row">
+                            <span class="cost-label">Low estimate (×200)</span>
+                            <span class="cost-value">$1,600</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-label">High estimate (×200)</span>
+                            <span class="cost-value warning">$2,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-card" style="--card-accent: linear-gradient(90deg, #E1306C, #833AB4);">
+                    <div class="cost-card-header">
+                        <div>
+                            <span class="platform-icon">📸</span>
+                            <span class="platform-name">Instagram</span>
+                        </div>
+                        <span class="cost-range">$1 - $4/acc</span>
+                    </div>
+                    <div class="cost-breakdown">
+                        <div class="cost-row">
+                            <span class="cost-label">Low estimate (×200)</span>
+                            <span class="cost-value highlight">$200</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-label">High estimate (×200)</span>
+                            <span class="cost-value">$800</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-card" style="--card-accent: linear-gradient(90deg, #00f2ea, #ff0050);">
+                    <div class="cost-card-header">
+                        <div>
+                            <span class="platform-icon">🎵</span>
+                            <span class="platform-name">TikTok</span>
+                        </div>
+                        <span class="cost-range">$0.60 - $2/acc</span>
+                    </div>
+                    <div class="cost-breakdown">
+                        <div class="cost-row">
+                            <span class="cost-label">Low estimate (×200)</span>
+                            <span class="cost-value highlight">$120</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-label">High estimate (×200)</span>
+                            <span class="cost-value">$400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-card" style="--card-accent: linear-gradient(90deg, #1DA1F2, #0d8bd9);">
+                    <div class="cost-card-header">
+                        <div>
+                            <span class="platform-icon">𝕏</span>
+                            <span class="platform-name">Twitter / X</span>
+                        </div>
+                        <span class="cost-range">$0.50 - $1/acc</span>
+                    </div>
+                    <div class="cost-breakdown">
+                        <div class="cost-row">
+                            <span class="cost-label">Low estimate (×200)</span>
+                            <span class="cost-value highlight">$100</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-label">High estimate (×200)</span>
+                            <span class="cost-value">$200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card primary">
+                    <div class="summary-label">Total Accounts (One-Time)</div>
+                    <div class="summary-value">$2,020 — $3,400</div>
+                    <div class="summary-note">All 800 accounts across 4 platforms</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">AI Tools (One-Time)</div>
+                    <div class="summary-value">$1,600</div>
+                    <div class="summary-note">$2 per profile × 800 profiles</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monthly Recurring Costs -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(139, 92, 246, 0.15);">🔄</div>
+                <div>
+                    <div class="section-title">Monthly Recurring Costs</div>
+                    <div class="section-subtitle">Infrastructure & tools required every month</div>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Purpose</th>
+                        <th>Low Estimate</th>
+                        <th>High Estimate</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>🌐 Proxies (Mobile)</strong></td>
+                        <td>Avoid platform bans</td>
+                        <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-green);">$1,000</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$1,000</td>
+                        <td>Recommended for this scale</td>
+                    </tr>
+                    <tr>
+                        <td><strong>🌐 Proxies (Residential)</strong></td>
+                        <td>Premium alternative</td>
+                        <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-orange);">$10,000+</td>
+                        <td style="font-family: 'JetBrains Mono', monospace; color: var(--accent-red);">$10,000+</td>
+                        <td>⚠️ Very expensive — consider mobile</td>
+                    </tr>
+                    <tr>
+                        <td><strong>🤖 AI Tools</strong></td>
+                        <td>Content generation</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$200</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$200</td>
+                        <td>ChatGPT, image gen, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>🌍 Anti-Detect Browsers</strong></td>
+                        <td>Twitter account management</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$50</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$50</td>
+                        <td>GoLogin, Multilogin, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>⚙️ Jarvee (Automation)</strong></td>
+                        <td>Mass account automation</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$1,000</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$1,000</td>
+                        <td>Required for 800 profile management</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Monthly Infrastructure Total</strong></td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">~$2,250</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$11,250+</td>
+                        <td>Depends on proxy choice</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Team Costs -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(16, 185, 129, 0.15);">👥</div>
+                <div>
+                    <div class="section-title">Team Investment</div>
+                    <div class="section-subtitle">Human resources required for the project</div>
+                </div>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-role">👨‍💻</div>
+                    <div class="team-title">Full-Time Manager</div>
+                    <div class="team-desc">100% dedicated to monitoring, troubleshooting, and system oversight</div>
+                    <div class="team-cost">$3,000/mo</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-role">🎨</div>
+                    <div class="team-title">Customization Team</div>
+                    <div class="team-desc">2 workers to customize profiles, create avatars, bios, and content</div>
+                    <div class="team-cost">$4,000/mo</div>
+                </div>
+                <div class="team-card" style="border-color: var(--accent-green);">
+                    <div class="team-role">💰</div>
+                    <div class="team-title">Total Team Cost</div>
+                    <div class="team-desc">Combined monthly personnel investment</div>
+                    <div class="team-cost" style="font-size: 1.5rem;">$7,000/mo</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(6, 182, 212, 0.15);">📅</div>
+                <div>
+                    <div class="section-title">Project Timeline</div>
+                    <div class="section-subtitle">Expected phases from start to full operation</div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-period">Weeks 1-2</div>
+                    <div class="timeline-title">Avatar Creation & Custom Info</div>
+                    <div class="timeline-desc">Create unique personas, generate profile photos, write bios, and establish each account's personality and background story.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Weeks 3-4</div>
+                    <div class="timeline-title">System Integration</div>
+                    <div class="timeline-desc">Add all 800 accounts to automation tools, configure proxies, set up browser profiles, and establish secure access protocols.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Month 2</div>
+                    <div class="timeline-title">Profile Customization</div>
+                    <div class="timeline-desc">Complete all profile details, post initial content, build follower bases organically, warm up accounts to avoid detection.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Month 2.5 - 3</div>
+                    <div class="timeline-title">Launch Operations</div>
+                    <div class="timeline-desc">Begin scheduled actions, engagement campaigns, content distribution, and full-scale operations across all platforms.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Total Investment Summary -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(245, 158, 11, 0.15);">📊</div>
+                <div>
+                    <div class="section-title">Total Investment Summary</div>
+                    <div class="section-subtitle">Complete cost breakdown for first 3 months</div>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Conservative</th>
+                        <th>High Estimate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Accounts (all platforms)</td>
+                        <td>One-time</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$2,020</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$3,400</td>
+                    </tr>
+                    <tr>
+                        <td>AI Tools (one-time setup)</td>
+                        <td>One-time</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$1,600</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$1,600</td>
+                    </tr>
+                    <tr>
+                        <td>AI Tools (monthly)</td>
+                        <td>Monthly ×3</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$600</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$600</td>
+                    </tr>
+                    <tr>
+                        <td>Jarvee Automation</td>
+                        <td>Monthly ×3</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$3,000</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$3,000</td>
+                    </tr>
+                    <tr>
+                        <td>Proxies (3 months)</td>
+                        <td>Monthly ×3</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$3,000</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$30,000+</td>
+                    </tr>
+                    <tr>
+                        <td>Browsers (3 months)</td>
+                        <td>Monthly ×3</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$150</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$150</td>
+                    </tr>
+                    <tr>
+                        <td>Team (3 months)</td>
+                        <td>Monthly ×3</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$21,000</td>
+                        <td style="font-family: 'JetBrains Mono', monospace;">$21,000</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>TOTAL (First 3 Months)</strong></td>
+                        <td style="font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; color: var(--accent-green);">~$31,370</td>
+                        <td style="font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; color: var(--accent-orange);">~$59,750+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="summary-grid" style="margin-top: 2rem;">
+                <div class="summary-card success">
+                    <div class="summary-label">Monthly Burn Rate (After Setup)</div>
+                    <div class="summary-value">~$9,250 — $18,250</div>
+                    <div class="summary-note">Team ($7K) + Infrastructure ($2.25K-$11.25K)</div>
+                </div>
+                <div class="summary-card warning">
+                    <div class="summary-label">Cost Per Profile</div>
+                    <div class="summary-value">~$39 — $75</div>
+                    <div class="summary-note">For first 3 months to full operation</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis & Recommendations -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(239, 68, 68, 0.15);">🔍</div>
+                <div>
+                    <div class="section-title">Analysis & Recommendations</div>
+                    <div class="section-subtitle">Things to consider before proceeding</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <div class="analysis-title">
+                    <span class="analysis-icon">✅</span>
+                    What Looks Good
+                </div>
+                <ul class="analysis-list">
+                    <li><span class="check-icon">✓</span> Account pricing is competitive and within market rates</li>
+                    <li><span class="check-icon">✓</span> Timeline is realistic (3 months to full operation)</li>
+                    <li><span class="check-icon">✓</span> Team structure makes sense for the scale</li>
+                    <li><span class="check-icon">✓</span> Mobile proxies at $1K/mo is the right choice vs residential</li>
+                </ul>
+            </div>
+
+            <div class="analysis-card">
+                <div class="analysis-title">
+                    <span class="analysis-icon">⚠️</span>
+                    Items to Consider
+                </div>
+                <ul class="analysis-list">
+                    <li><span class="warn-icon">!</span> <strong>Jarvee is $1,000/mo</strong> — This is a significant cost, ensure it handles all 4 platforms</li>
+                    <li><span class="warn-icon">!</span> <strong>Account replacement budget</strong> — Expect 10-20% ban rate, budget ~$400-$680 extra accounts</li>
+                    <li><span class="warn-icon">!</span> <strong>Anti-detect browser may need scaling</strong> — $50 might not cover 200 Twitter profiles</li>
+                    <li><span class="warn-icon">!</span> <strong>Content creation costs</strong> — AI images, videos, graphics for 800 accounts may need more budget</li>
+                    <li><span class="warn-icon">!</span> <strong>Residential proxies are 10× more expensive</strong> — Only use if mobile proxies fail</li>
+                </ul>
+            </div>
+
+            <div class="analysis-card">
+                <div class="analysis-title">
+                    <span class="analysis-icon">💡</span>
+                    Suggestions
+                </div>
+                <ul class="analysis-list">
+                    <li><span class="check-icon">→</span> <strong>Start with 50 profiles per platform first</strong> — Test the workflow before scaling to 200 each</li>
+                    <li><span class="check-icon">→</span> <strong>Use mobile proxies</strong> — Much more cost-effective than residential ($1K vs $10K+)</li>
+                    <li><span class="check-icon">→</span> <strong>Phase platform rollout</strong> — Start FB+IG (Meta), add TT+TW later</li>
+                    <li><span class="check-icon">→</span> <strong>Budget 20% buffer</strong> — For unexpected bans, tool upgrades, etc.</li>
+                    <li><span class="check-icon">→</span> <strong>Document all processes</strong> — Essential for team handoffs and scaling</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>800 AVA Project Plan • Generated January 2026</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">This document is for internal planning purposes only</p>
+        </footer>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">📄 Print / Save PDF</button>
+</body>
+</html>
+
